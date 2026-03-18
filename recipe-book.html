@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小柒的菜谱</title>
+    <style>
+        :root {
+            --bg-base: #F8F9F5;
+            --bg-card: #E2E8E4;
+            --text-main: #2D3331;
+            --text-secondary: #5C6662;
+            --accent-green: #5B8282;
+            --radius-sm: 12px;
+            --space-sm: 16px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: var(--bg-base);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: var(--space-sm);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: var(--space-sm);
+            color: var(--accent-green);
+        }
+        .recipe-container {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: var(--space-sm);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .categories {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: var(--space-sm);
+            height: fit-content;
+            position: sticky;
+            top: var(--space-sm);
+        }
+        .category-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+        }
+        .category-btn:hover {
+            background: var(--bg-card);
+        }
+        .category-btn.active {
+            background: var(--accent-green);
+            color: white;
+        }
+        .recipes {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: var(--space-sm);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .recipe-category {
+            display: none;
+        }
+        .recipe-category.active {
+            display: block;
+        }
+        .category-title {
+            color: var(--accent-green);
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .recipe-item {
+            padding: 12px;
+            background: var(--bg-base);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+        .recipe-item:hover {
+            transform: translateY(-2px);
+            background: var(--bg-card);
+        }
+        @media (max-width: 768px) {
+            .recipe-container {
+                grid-template-columns: 100px 1fr;
+            }
+            .recipe-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>小柒的养生菜谱</h1>
+        <p style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">完整收录所有健康美食</p>
+    </div>
+
+    <div class="recipe-container">
+        <div class="categories">
+            <button class="category-btn active" data-category="breakfast">早餐粥品</button>
+            <button class="category-btn" data-category="meat">肉类蛋白</button>
+            <button class="category-btn" data-category="vegetables">营养蔬菜</button>
+            <button class="category-btn" data-category="soup">滋补汤品</button>
+        </div>
+
+        <div class="recipes">
+            <div class="recipe-category active" id="breakfast">
+                <h2 class="category-title">🍲 早餐粥品</h2>
+                <div class="recipe-grid">
+                    <div class="recipe-item">枸杞瘦肉粥</div>
+                    <div class="recipe-item">五谷杂粮粥</div>
+                    <div class="recipe-item">牛奶燕麦粥</div>
+                    <div class="recipe-item">南瓜小米粥</div>
+                    <div class="recipe-item">红豆薏米粥</div>
+                    <div class="recipe-item">香菇青菜粥</div>
+                    <div class="recipe-item">地瓜粥</div>
+                    <div class="recipe-item">虾仁粥</div>
+                    <div class="recipe-item">菜包</div>
+                    <div class="recipe-item">肉包</div>
+                    <div class="recipe-item">饺子</div>
+                    <div class="recipe-item">三明治煎蛋</div>
+                    <div class="recipe-item">白米粥</div>
+                </div>
+            </div>
+
+            <div class="recipe-category" id="meat">
+                <h2 class="category-title">🥩 肉类蛋白</h2>
+                <div class="recipe-grid">
+                    <div class="recipe-item">洋葱青椒炒牛肉</div>
+                    <div class="recipe-item">苦瓜炒牛肉</div>
+                    <div class="recipe-item">芹菜炒牛肉</div>
+                    <div class="recipe-item">口蘑蒜香牛肉粒</div>
+                    <div class="recipe-item">红烧五花肉</div>
+                    <div class="recipe-item">红烧排骨</div>
+                    <div class="recipe-item">蒜香鸡翅</div>
+                    <div class="recipe-item">西兰花口蘑炒鸡腿肉</div>
+                    <div class="recipe-item">照烧鸡翅</div>
+                    <div class="recipe-item">清蒸鲈鱼</div>
+                    <div class="recipe-item">清蒸罗非鱼</div>
+                    <div class="recipe-item">生煎三文鱼</div>
+                    <div class="recipe-item">鱿鱼炒韭黄</div>
+                    <div class="recipe-item">红烧鱼</div>
+                    <div class="recipe-item">鲈鱼煲</div>
+                    <div class="recipe-item">油焖虾</div>
+                    <div class="recipe-item">粉丝鲜虾煲</div>
+                    <div class="recipe-item">白灼鲜虾</div>
+                    <div class="recipe-item">爆炒花甲</div>
+                </div>
+            </div>
+
+            <div class="recipe-category" id="vegetables">
+                <h2 class="category-title">🥬 营养蔬菜</h2>
+                <div class="recipe-grid">
+                    <div class="recipe-item">空心菜炒肉</div>
+                    <div class="recipe-item">菜心炒肉</div>
+                    <div class="recipe-item">上海青炒肉</div>
+                    <div class="recipe-item">芥蓝炒肉</div>
+                    <div class="recipe-item">菠菜炒肉</div>
+                    <div class="recipe-item">小白菜炒肉</div>
+                    <div class="recipe-item">西兰花炒香菇肉片</div>
+                    <div class="recipe-item">白菜腐竹煲</div>
+                    <div class="recipe-item">西兰花胡萝卜炒虾仁</div>
+                    <div class="recipe-item">芹菜炒肉片</div>
+                    <div class="recipe-item">青菜炒平菇</div>
+                    <div class="recipe-item">手撕包菜</div>
+                    <div class="recipe-item">莴笋炒肉片</div>
+                    <div class="recipe-item">花菜炒肉</div>
+                    <div class="recipe-item">蚝油生菜</div>
+                    <div class="recipe-item">炒丝瓜</div>
+                    <div class="recipe-item">苦瓜炒肉</div>
+                    <div class="recipe-item">红烧茄子</div>
+                    <div class="recipe-item">虾皮西葫芦</div>
+                    <div class="recipe-item">香煎口蘑</div>
+                    <div class="recipe-item">四季豆炒腊肠</div>
+                    <div class="recipe-item">荷兰豆炒腊肠</div>
+                    <div class="recipe-item">青椒小炒肉</div>
+                    <div class="recipe-item">玉米豌豆炒胡萝卜粒</div>
+                    <div class="recipe-item">干煸四季豆</div>
+                    <div class="recipe-item">清炒土豆丝</div>
+                    <div class="recipe-item">香菇豆腐煲</div>
+                    <div class="recipe-item">香煎豆腐</div>
+                    <div class="recipe-item">苦瓜炒蛋</div>
+                    <div class="recipe-item">菜脯蛋</div>
+                    <div class="recipe-item">韭黄炒蛋</div>
+                    <div class="recipe-item">蛋炒西红柿</div>
+                    <div class="recipe-item">青椒炒蛋</div>
+                    <div class="recipe-item">黄瓜炒蛋</div>
+                </div>
+            </div>
+
+            <div class="recipe-category" id="soup">
+                <h2 class="category-title">🍜 滋补汤品</h2>
+                <div class="recipe-grid">
+                    <div class="recipe-item">玉米胡萝卜排骨汤</div>
+                    <div class="recipe-item">莲藕花生排骨汤</div>
+                    <div class="recipe-item">白萝卜排骨汤</div>
+                    <div class="recipe-item">鱼头豆腐汤</div>
+                    <div class="recipe-item">剥皮鱼汤</div>
+                    <div class="recipe-item">冬瓜排骨汤</div>
+                    <div class="recipe-item">山药绿豆莲子排骨汤</div>
+                    <div class="recipe-item">菠菜猪肝汤</div>
+                    <div class="recipe-item">牛肉丸生菜汤</div>
+                    <div class="recipe-item">鱼饺生菜汤</div>
+                    <div class="recipe-item">丝瓜花甲汤</div>
+                    <div class="recipe-item">紫菜蛋汤</div>
+                    <div class="recipe-item">番茄蛋汤</div>
+                    <div class="recipe-item">白贝冬瓜汤</div>
+                    <div class="recipe-item">冬瓜鲜虾汤</div>
+                    <div class="recipe-item">冬瓜口蘑汤</div>
+                    <div class="recipe-item">菠菜鱼丸汤</div>
+                    <div class="recipe-item">豆苗虾滑汤</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const category = this.getAttribute('data-category');
+
+                // 更新按钮状态
+                document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // 显示对应分类
+                document.querySelectorAll('.recipe-category').forEach(cat => cat.classList.remove('active'));
+                document.getElementById(category).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

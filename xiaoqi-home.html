@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小柒的家</title>
+    <style>
+        :root {
+            --bg-base: #F8F9F5;
+            --bg-card: #E2E8E4;
+            --bg-card-dark: #2C3330;
+            --text-main: #2D3331;
+            --text-secondary: #5C6662;
+            --text-tertiary: #929C98;
+            --line-color: rgba(92, 102, 98, 0.15);
+            --accent-green: #5B8282;
+            --radius-lg: 28px;
+            --radius-sm: 12px;
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 414px;
+            background-color: var(--bg-base);
+            position: relative;
+            padding-bottom: 90px;
+            overflow-x: hidden;
+        }
+
+        .text-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .text-h1 {
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .text-body {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--line-color);
+            width: 100%;
+            margin: var(--space-sm) 0;
+        }
+
+        .header {
+            padding: var(--space-lg) var(--space-md) var(--space-sm);
+            text-align: center;
+        }
+
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--accent-green);
+            margin-bottom: var(--space-sm);
+        }
+
+        .logo-symbol {
+            width: 20px;
+            height: 20px;
+            border-top: 2px solid var(--accent-green);
+            border-bottom: 2px solid var(--accent-green);
+            position: relative;
+        }
+
+        .logo-symbol::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 12px;
+            height: 2px;
+            background: var(--accent-green);
+            transform: translateY(-50%);
+        }
+
+        .action-btn {
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .action-btn:active {
+            opacity: 0.7;
+        }
+
+        .content-preview {
+            background: white;
+            border-radius: var(--radius-sm);
+            padding: var(--space-sm);
+            margin-top: var(--space-sm);
+            min-height: 120px;
+        }
+
+        .content-item {
+            padding: var(--space-xs) 0;
+            border-bottom: 1px solid var(--line-color);
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-item strong {
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        .section {
+            padding: var(--space-md) var(--space-md) 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(248, 249, 245, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid var(--line-color);
+            z-index: 100;
+            padding-bottom: 20px;
+        }
+
+        @media (min-width: 415px) {
+            .bottom-nav {
+                width: 414px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 10px;
+        }
+
+        .nav-item.active {
+            color: var(--accent-green);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="brand-mark">
+                <div class="logo-symbol"></div>
+                <span>小柒的家</span>
+            </div>
+            <h1 class="text-h1">今日安排</h1>
+            <p class="text-body" id="currentDateTime" style="margin-top: var(--space-xs);">加载中...</p>
+        </header>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="text-label">家务任务</span>
+                <button class="action-btn" onclick="openScheduleManager()">管理</button>
+            </div>
+            <div class="divider"></div>
+            <div class="content-preview" id="houseworkList">
+                <div class="content-item">暂无家务任务</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span class="text-label">今日菜单</span>
+                <button class="action-btn" onclick="generateDailyMenu()">生成</button>
+            </div>
+            <div class="divider"></div>
+            <div class="content-preview" id="dietPlan">
+                <div class="content-item">点击上方按钮生成今日营养菜单</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            首页
+        </a>
+        <a href="#" class="nav-item" onclick="openRecipeBook()">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+            </svg>
+            菜单
+        </a>
+        <a href="#" class="nav-item" onclick="openScheduleManager()">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+                <path d="M16 3v4M8 3v4M4 11h16"></path>
+            </svg>
+            日程
+        </a>
+        <a href="#" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            我的
+        </a>
+    </nav>
+
+    <script>
+        // 养生食谱数据
+        const HEALTHY_RECIPES = {
+            breakfast: [
+                '枸杞瘦肉粥', '五谷杂粮粥', '牛奶燕麦粥', '南瓜小米粥',
+                '红豆薏米粥', '香菇青菜粥', '地瓜粥', '虾仁粥',
+                '菜包', '肉包', '饺子', '三明治煎蛋', '白米粥'
+            ],
+            meat: [
+                '洋葱青椒炒牛肉', '苦瓜炒牛肉', '芹菜炒牛肉', '口蘑蒜香牛肉粒',
+                '红烧五花肉', '红烧排骨', '蒜香鸡翅', '西兰花口蘑炒鸡腿肉',
+                '照烧鸡翅', '清蒸鲈鱼', '清蒸罗非鱼', '生煎三文鱼',
+                '鱿鱼炒韭黄', '红烧鱼', '鲈鱼煲', '油焖虾',
+                '粉丝鲜虾煲', '白灼鲜虾', '爆炒花甲'
+            ],
+            vegetables: [
+                '空心菜炒肉', '菜心炒肉', '上海青炒肉', '芥蓝炒肉',
+                '菠菜炒肉', '小白菜炒肉', '西兰花炒香菇肉片', '白菜腐竹煲',
+                '西兰花胡萝卜炒虾仁', '芹菜炒肉片', '青菜炒平菇', '手撕包菜',
+                '莴笋炒肉片', '花菜炒肉', '蚝油生菜', '炒丝瓜',
+                '苦瓜炒肉', '红烧茄子', '虾皮西葫芦', '香煎口蘑',
+                '四季豆炒腊肠', '荷兰豆炒腊肠', '青椒小炒肉', '玉米豌豆炒胡萝卜粒',
+                '干煸四季豆', '清炒土豆丝', '香菇豆腐煲', '香煎豆腐',
+                '苦瓜炒蛋', '菜脯蛋', '韭黄炒蛋', '蛋炒西红柿',
+                '青椒炒蛋', '黄瓜炒蛋'
+            ],
+            soup: [
+                '玉米胡萝卜排骨汤', '莲藕花生排骨汤', '白萝卜排骨汤', '鱼头豆腐汤',
+                '剥皮鱼汤', '冬瓜排骨汤', '山药绿豆莲子排骨汤', '菠菜猪肝汤',
+                '牛肉丸生菜汤', '鱼饺生菜汤', '丝瓜花甲汤', '紫菜蛋汤',
+                '番茄蛋汤', '白贝冬瓜汤', '冬瓜鲜虾汤', '冬瓜口蘑汤',
+                '菠菜鱼丸汤', '豆苗虾滑汤'
+            ]
+        };
+
+        // 生成每日菜单
+        function generateDailyMenu() {
+            const breakfast = HEALTHY_RECIPES.breakfast[Math.floor(Math.random() * HEALTHY_RECIPES.breakfast.length)];
+
+            let lunch = '';
+            if (Math.random() > 0.5) {
+                const meat = HEALTHY_RECIPES.meat[Math.floor(Math.random() * HEALTHY_RECIPES.meat.length)];
+                const veg = HEALTHY_RECIPES.vegetables[Math.floor(Math.random() * HEALTHY_RECIPES.vegetables.length)];
+                lunch = `${meat} + ${veg}`;
+            } else {
+                const soup = HEALTHY_RECIPES.soup[Math.floor(Math.random() * HEALTHY_RECIPES.soup.length)];
+                const veg = HEALTHY_RECIPES.vegetables[Math.floor(Math.random() * HEALTHY_RECIPES.vegetables.length)];
+                lunch = `${soup} + ${veg}`;
+            }
+
+            let dinner = '';
+            if (Math.random() > 0.5) {
+                const meat = HEALTHY_RECIPES.meat[Math.floor(Math.random() * HEALTHY_RECIPES.meat.length)];
+                const veg = HEALTHY_RECIPES.vegetables[Math.floor(Math.random() * HEALTHY_RECIPES.vegetables.length)];
+                dinner = `${meat} + ${veg}`;
+            } else {
+                const soup = HEALTHY_RECIPES.soup[Math.floor(Math.random() * HEALTHY_RECIPES.soup.length)];
+                const veg = HEALTHY_RECIPES.vegetables[Math.floor(Math.random() * HEALTHY_RECIPES.vegetables.length)];
+                dinner = `${soup} + ${veg}`;
+            }
+
+            const menuHtml = `
+                <div class="content-item">
+                    <strong>早餐：</strong> ${breakfast}
+                </div>
+                <div class="content-item">
+                    <strong>午餐：</strong> ${lunch}
+                </div>
+                <div class="content-item">
+                    <strong>晚餐：</strong> ${dinner}
+                </div>
+            `;
+
+            document.getElementById('dietPlan').innerHTML = menuHtml;
+
+            const today = new Date().toDateString();
+            const menu = { breakfast, lunch, dinner, date: today };
+            localStorage.setItem('todayMenu', JSON.stringify(menu));
+        }
+
+        // 加载饮食计划
+        function loadDietPlan() {
+            const savedMenu = localStorage.getItem('todayMenu');
+            const today = new Date().toDateString();
+
+            if (savedMenu) {
+                try {
+                    const menu = JSON.parse(savedMenu);
+                    if (menu.date === today) {
+                        const menuHtml = `
+                            <div class="content-item">
+                                <strong>早餐：</strong> ${menu.breakfast}
+                            </div>
+                            <div class="content-item">
+                                <strong>午餐：</strong> ${menu.lunch}
+                            </div>
+                            <div class="content-item">
+                                <strong>晚餐：</strong> ${menu.dinner}
+                            </div>
+                        `;
+                        document.getElementById('dietPlan').innerHTML = menuHtml;
+                        return;
+                    }
+                } catch (e) {
+                    console.error('解析菜单数据出错:', e);
+                }
+            }
+
+            document.getElementById('dietPlan').innerHTML =
+                '<div class="content-item">点击上方按钮生成今日营养菜单</div>';
+        }
+
+        // 家务任务数据 - 每周循环
+        const WEEKLY_HOUSEWORK = {
+            1: ['客厅吸尘', '客厅整理', '阳台清洁', '阳台整理'], // 周一
+            2: ['厨房清洁', '灶台擦拭', '洗碗池清理', '厨房收纳整理'], // 周二
+            3: ['卧室整理', '床铺整理', '客卫清洁', '浴室消毒'], // 周三
+            4: ['杂物房整理', '楼梯清洁', '物品归类', '空间优化'], // 周四
+            5: ['书房整理', '书架整理', '文件归档', '桌面清理'], // 周五
+            6: ['电脑房清洁', '设备除尘', '线缆整理', '工作区整理'], // 周六
+            0: ['露台清洁', '露台整理', '户外家具清洁', '露台地面清扫']  // 周日
+        };
+
+        // 生成今日家务任务
+        function generateTodayHousework() {
+            const today = new Date();
+            const dayOfWeek = today.getDay(); // 0=周日, 1=周一, ..., 6=周六
+            const todayStr = today.toDateString();
+
+            // 检查是否已经生成了今日任务
+            const savedDate = localStorage.getItem('houseworkDate');
+            if (savedDate === todayStr) {
+                return; // 今天已经生成了任务
+            }
+
+            const todayTasks = WEEKLY_HOUSEWORK[dayOfWeek] || [];
+            const tasks = todayTasks.map((task, index) => ({
+                id: Date.now() + index,
+                text: task,
+                completed: false,
+                date: todayStr
+            }));
+
+            localStorage.setItem('houseworkTasks', JSON.stringify(tasks));
+            localStorage.setItem('houseworkDate', todayStr);
+        }
+
+        // 加载家务任务
+        function loadHouseworkTasks() {
+            const today = new Date().toDateString();
+            const savedDate = localStorage.getItem('houseworkDate');
+
+            // 如果是新的一天，生成新的家务任务
+            if (savedDate !== today) {
+                generateTodayHousework();
+            }
+
+            const tasks = JSON.parse(localStorage.getItem('houseworkTasks') || '[]');
+            const container = document.getElementById('houseworkList');
+
+            if (tasks.length === 0) {
+                const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+                const today = new Date();
+                const dayName = dayNames[today.getDay()];
+                container.innerHTML = `<div class="content-item">今天是${dayName}，暂无家务任务</div>`;
+            } else {
+                container.innerHTML = tasks.map(task =>
+                    `<div class="content-item">
+                        <span style="display: inline-block; width: 12px; height: 12px; border: 1px solid var(--accent-green); border-radius: 50%; margin-right: 8px; vertical-align: middle;"></span>
+                        ${task.text}
+                    </div>`
+                ).join('');
+            }
+        }
+
+        // 工具函数
+        function openRecipeBook() {
+            window.open('recipe-book.html', '_blank');
+        }
+
+        function openScheduleManager() {
+            window.open('daily-planner-enhanced.html', '_blank');
+        }
+
+        // 更新时间
+        function updateDateTime() {
+            const now = new Date();
+            const options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('zh-CN', options);
+        }
+
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDateTime();
+            loadHouseworkTasks();
+            loadDietPlan();
+            setInterval(updateDateTime, 60000);
+        });
+    </script>
+</body>
+</html>
